@@ -490,3 +490,9 @@ Any attempt to code risk class armor will result in a 10 day Github ban.*/
 	attribute_requirements = list(
 							FORTITUDE_ATTRIBUTE = 40
 							)
+
+/obj/item/clothing/suit/armor/ego_gear/he/green_cross
+	name = "green cross"
+	desc = "A sterile labcoat marked with a green insignia, reminiscent of an organization long past."
+	icon_state = "green_cross"
+	armor = list(RED_DAMAGE = 40, WHITE_DAMAGE = 10, BLACK_DAMAGE = 50, PALE_DAMAGE = -30) //70

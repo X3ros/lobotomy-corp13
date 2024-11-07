@@ -1548,3 +1548,9 @@
 	temperance_bonus = -1
 	justice_bonus = 3
 	slot = HAT
+
+/datum/ego_gifts/greencross
+	name = "Green Cross"
+	icon_state = "green_cross"
+	fortitude_bonus = 4
+	prudence_bonus = -2

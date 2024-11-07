@@ -2066,3 +2066,17 @@
 /obj/item/ego_weapon/hexnail/melee_attack_chain(mob/user, atom/target, params)
 	..()
 	hitsound = "sound/weapons/fixer/generic/knife[pick(1,2,3,4)].ogg"
+
+/obj/item/ego_weapon/mini/green_cross
+	name = "Green Cross"
+	desc = "A scalpel which seems to constantly dripping with some manner of acid. It's far more suited to harming than healing."
+	icon_state = "green_cross"
+	force = 20
+	attack_speed = 0.7
+	damtype = RED_DAMAGE
+	attack_verb_continuous = list("slashes", "stabs", "slaps")
+	attack_verb_simple = list("slash", "stab", "slap")
+	hitsound = 'sound/weapons/fixer/generic/knife1.ogg'
+	attribute_requirements = list(
+							FORTITUDE_ATTRIBUTE = 40
+							)

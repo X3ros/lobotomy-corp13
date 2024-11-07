@@ -491,3 +491,12 @@
 /datum/ego_datum/armor/hexnail
 	item_path = /obj/item/clothing/suit/armor/ego_gear/he/hexnail
 	cost = 35
+
+//Caustic Chirurgeon - Green Cross
+/datum/ego_datum/armor/green_cross
+	item_path = /obj/item/clothing/suit/armor/ego_gear/he/green_cross
+	cost = 35
+
+/datum/ego_datum/weapon/green_cross
+	item_path = /obj/item/ego_weapon/mini/green_cross
+	cost = 35
