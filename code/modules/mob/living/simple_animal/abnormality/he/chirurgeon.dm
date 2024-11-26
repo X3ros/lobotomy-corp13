@@ -39,15 +39,65 @@
 
 	gift_type = /datum/ego_gifts/greencross
 	abnormality_origin = ABNORMALITY_ORIGIN_ORIGINAL
+	var/can_act = TRUE
+	var/death_counter = 0
 
 /mob/living/simple_animal/hostile/abnormality/chirurgeon/FailureEffect(mob/living/carbon/human/user, work_type, pe)
 	. = ..()
 	datum_reference.qliphoth_change(-1)
 	return
 
+/mob/living/simple_animal/hostile/abnormality/chirurgeon/Initialize()
+	. = ..()
+	RegisterSignal(SSdcs, COMSIG_GLOB_MOB_DEATH, PROC_REF(on_mob_death))
+
+/mob/living/simple_animal/hostile/abnormality/chirurgeon/proc/on_mob_death(datum/source, mob/living/died, gibbed) //Shamelessly stolen code from MoSB
+	SIGNAL_HANDLER
+	if(!IsContained()) // If it's breaching right now
+		return FALSE
+	if(!ishuman(died))
+		return FALSE
+	if(died.z != z)
+		return FALSE
+	if(!died.mind)
+		return FALSE
+	death_counter += 1
+	if(death_counter >= 2)
+		death_counter = 0
+		datum_reference.qliphoth_change(-1)
+	return TRUE
+
+/mob/living/simple_animal/hostile/abnormality/chirurgeon/AttackingTarget()
+	if(ishuman(target))
+		var/mob/living/carbon/human/H = target
+		if(H.stat == DEAD || H.health <= HEALTH_THRESHOLD_DEAD)
+			return Convert(H)
+
+/mob/living/simple_animal/hostile/abnormality/chirurgeon/proc/Convert(mob/living/carbon/human/H)
+	if(!istype(H))
+		return
+	if(!can_act)
+		return
+	can_act = FALSE
+	forceMove(get_turf(H))
+	ChangeResistances(list(RED_DAMAGE = 0, WHITE_DAMAGE = 0, BLACK_DAMAGE = 0, PALE_DAMAGE = 0))
+	playsound(src, 'sound/abnormalities/censored/convert.ogg', 45, FALSE, 5)
+	SLEEP_CHECK_DEATH(3)
+	new /obj/effect/temp_visual/censored(get_turf(src))
+	for(var/i = 1 to 3)
+		new /obj/effect/gibspawner/generic/silent(get_turf(src))
+		SLEEP_CHECK_DEATH(5.5)
+	var/mob/living/simple_animal/hostile/surgical_error/C = new(get_turf(src))
+	if(!QDELETED(H))
+		C.desc = "A malformed mess of body parts and organs in the vague shape of an animal. You recognize one of the heads from [H.real_name]..."
+		H.gib()
+	ChangeResistances(list(RED_DAMAGE = 0.7, WHITE_DAMAGE = 1.4, BLACK_DAMAGE = 0.6, PALE_DAMAGE = 2))
+	adjustBruteLoss(-(maxHealth*0.1))
+	can_act = TRUE
+
 /mob/living/simple_animal/hostile/surgical_error //Oh fuck what'd he do to Bob's body
 	name = "Surgical Error"
-	desc = "A malformed mess of body parts and organs in the vague shape of an animal. You think you recognize one of the heads..." //TODO: make the description update to reflect who was operated on
+	desc = "A malformed mess of body parts and organs in the vague shape of an animal. You think you recognize one of the heads..."
 	icon = 'ModularTegustation/Teguicons/32x32.dmi'
 	icon_state = "surgical_error"
 	icon_living = "surgical_error"
@@ -66,7 +116,6 @@
 
 /mob/living/simple_animal/hostile/surgical_error/Initialize()
 	. = ..()
-	playsound(get_turf(src), 'sound/abnormalities/censored/mini_born.ogg', 50, 1, 4)
 	base_pixel_x = rand(-6,6)
 	pixel_x = base_pixel_x
 	base_pixel_y = rand(-6,6)
@@ -80,8 +129,8 @@
 	return ..()
 
 	//BIG-ASS TO-DO LIST
-	//1. Actually make it SPAWN the little dudes
+	//1. Make it actually SPAWN the little dudes
 	//2. Make it drag corpses back to its cell (probably difficult)
 	//3. Add the qlip increase from spawning little guys while contained
 	//4. Make it infight with/prioritize killing other corpse-eaters like MoSB and Eris
-	//5. Make little dudes drop human meat when butchered
+	//5. Make little dudes drop human meat when butchered (optional)

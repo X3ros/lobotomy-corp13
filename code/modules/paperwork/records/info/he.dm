@@ -576,3 +576,15 @@
 		"When the work result was Bad, the Qliphoth counter lowered.",
 		"When work was successfully performed, a certain amount of the raw material was converted into nutritous and healing Lifetime Stew, and ejected from the abnormality.",
 		"Employees who consume too much of the Lifetime Stew, or food in general become easy meals for this abnormality.")
+
+// Caustic Chirurgeon
+/obj/item/paper/fluff/info/he/chirurgeon
+	abno_type = /mob/living/simple_animal/hostile/abnormality/chirurgeon
+	abno_code = "T-02-92"
+	abno_info = list(
+		"When two employees died within the facility, the Qliphoth Counter decreased.",
+		"When the work result was Bad, the Qliphoth Counter decreased.",
+		"After Agent Quinn offered a human corpse to T-02-92, T-02-92 drew back a curtain on the cell and operated on the corpse, producing T-02-92-1. This action also increased the Qliphoth Counter by 1.",
+		"T-02-92-1, while grotesque, is passive towards employees, to the point of helping defend the facility against threats using its acidic bile.",
+		"Upon breaching, T-02-92 sought out the nearest corpse and dragged it back to its cell to be operated on. When T-02-92 ran out of corpses to operate on, it began attacking employees to forcefully operate on them.")
+
