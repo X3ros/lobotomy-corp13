@@ -114,13 +114,6 @@
 	melee_damage_upper = 15
 	del_on_death = TRUE //Temporary measure until I figure out how butchering drop pools work
 
-/mob/living/simple_animal/hostile/surgical_error/Initialize()
-	. = ..()
-	base_pixel_x = rand(-6,6)
-	pixel_x = base_pixel_x
-	base_pixel_y = rand(-6,6)
-	pixel_y = base_pixel_y
-
 /mob/living/simple_animal/hostile/abnormality/chirurgeon/CanAttack(atom/the_target) //Stop eating my fucking test subjects
 	if(istype(the_target, /mob/living/simple_animal/hostile/abnormality/eris))
 		var/mob/living/L = the_target
@@ -130,7 +123,7 @@
 
 	//BIG-ASS TO-DO LIST
 	//1. Make it actually SPAWN the little dudes
-	//2. Make it drag corpses back to its cell (probably difficult)
+	//2. Make it drag corpses back to its cell (most difficult part by far, holy shit)
 	//3. Add the qlip increase from spawning little guys while contained
-	//4. Make it infight with/prioritize killing other corpse-eaters like MoSB and Eris
+	//4. Make it infight with/prioritize killing other corpse-eaters like MoSB and Eris (partially implemented)
 	//5. Make little dudes drop human meat when butchered (optional)
